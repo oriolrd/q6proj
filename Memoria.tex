@@ -1,0 +1,163 @@
+\documentclass[a4paper,12pt]{article}
+\title{\textbf{Bioimpresi\'{o}n 3d aplicada al campo Card\'{i}aco}\\\large{ECB, EMDTB, SHB || Q6 EEBE - UPC}}
+\author{Oriol Ruiz Dom\'{i}nguez}
+
+\usepackage{mathtools}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[spanish]{babel}
+\usepackage[left=1.5cm,top=2.5cm,right=1.5cm,bottom=2.5cm]{geometry} 
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{graphicx}
+\usepackage{eurosym}
+\usepackage{listings} 
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+
+%Extra levels of subsection
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\begin{document}
+\maketitle
+\pagebreak
+\tableofcontents
+\pagebreak
+\listoffigures
+\pagebreak
+
+
+\pagebreak
+\section{Introducción}
+
+\pagebreak
+\section{Historia}
+
+\subsection{Historia de los biomateriales}
+
+\subsection{Historia de la impresión y bioimpresión 3D}
+
+\subsection{Biomateriales e impresión 3D en el campo vascular}
+
+\pagebreak
+\section{Marco actual - Investigación y mercado}
+
+\pagebreak
+\section{Marco legal - Nivel de mercado. Normativa}
+
+\pagebreak
+\section{Fisiología}
+
+\subsection{El sistema circulatorio}
+
+\subsection{El corazón}
+
+\subsubsection{Función del corazón}
+
+\subsubsection{Anatomía del corazón}
+
+\subsubsection{Actividad eléctrica del corazón (Potenciales de acción cardíacos)}
+
+\subsubsection{Mecanismo de contracción cardíaco}
+
+\subsubsection{Ciclo cardíaco}
+
+\subsection{Problemas y enfermedades cardíacas}
+
+\pagebreak
+\section{Biomateriales y Biocompatibilidad}
+
+\subsection{Principales materiales para bioimpresión}
+
+\subsubsection{Cerámicos}
+
+\subsubsection{Polímeros}
+
+\subsubsection{Metales}
+
+\subsubsection{Hidrogeles}
+
+\subsection{Biocompatibilidad}
+
+\subsection{Ventajas e inconvenientes de los biomateriales}
+
+\subsection{Impresión de stents}
+
+\subsubsection{Metodología}
+
+\subsubsection{Materiales empleados}
+
+\subsubsection{Ventajas e inconvenientes de Stents 3D}
+
+\pagebreak
+\section{Bioimpresión}
+%% Índice anteproyecto
+%\subsection{Modelado}
+%\subsubsection{Modelado cardíaco}
+%\subsubsection{Modelado de Stents}
+%\subsection{Preparación}
+%\subsection{Preimpresión}
+\subsection{Estrategias de bioimpresión}
+La bioimpresión se basa en la deposición de material biológico siguiendo un patrón establecido. Existen variedad de métodos que cumplen este objetivo, aunque los principales son: por inyección de tinta, mediante microextrusión o bien mediante un láser.
+
+\subsubsection{Inyección de tinta}
+Las impresoras de inyección de tinta son el modelo más empleado en el ámbito no biológico. De hecho, las primeras bioimpresoras de inyección de tinta se crearon a partir de la modificación de impresoras comerciales. Su funcionamiento consiste en la deposición de un volumen de tinta controlado en la posición establecida.
+
+Para realizar la eyección de tinta hay dos métodos: térmica y acústicamente.
+
+\paragraph{Inyección térmica}
+El método térmico consiste en calentar eléctricamente el cabezal entre 200 y 300 grados para realizar pulsos de presión y que caiga el material. Estudios han demostrado que esta temperatura, al producirse en alrededor de 2$\mu s$ y estar tan localizada, no tiene gran impacto en la estabilidad de las moléculas biológicas, como el ADN ya que solo provocan un incremento de entre 4 y 10 ºC.
+
+
+\paragraph{Inyección acústica}
+Otra manera de realizar inyección de volumen de líquido controlado es mediante un cristal piezoeléctrico. Al aplicarle un voltaje a este piezoeléctrico este produce una onda acústica, así como un cambio rápido en su forma de manera que genera la presión suficiente como para eyectar el líquido. También es posible realizar la presión mediante una fuerza de radiación acústica asociada a los ultrasonidos.
+
+Varios parámetros como el pulso, la duración o la amplitud se ajustan para controlar el volumen de eyección y la frecuencia a la que se producen.
+
+\subsubsection{Microextrusión}
+
+\subsubsection{Láser}
+
+\subsection{Impresoras}
+El mercado actual de impresión 3d está creciendo exponencialmente dado al reducido precio al que se ha conseguido diseñar los equipos. Hay diferentes empresas destinadas al sector, aunque hay que hacer una mención especial a las impresoras diseñadas en la plataforma open-source reprap.org, en la cuál se puede encontrar un ámplio abanico de diseños de manera gratuita.
+
+Uno de los modelos más fabricados es la impresora Prusa I3 bajo la licencia de reprap, diseñada por el CEO de PrusaResearch Josef Průša. Dada la facilidad de acceso a las diferentes partes del equipo y la posibilidad de cambiar sus partes, estos modelos han sido empleados por muchas empresas tanto para ser comercializados como para la creación de impresoras adaptadas para realizar bioimpresión.
+
+Más allá de las impresoras open-source, empresas como BCN3D (bajo la FundacióCIM-UPC), han desarrolado impresoras como la BCN3D Sigma. De nuevo, los modelos básicos no suelen estar diseñados para realizar bioimpresión, pero en laboratorios como el del Dr Gioseppe Scionti realizan la adaptación para ello.
+
+\subsubsection{Partes básicas}
+Todos los modelos más comerciales de impresoras 3d cuentan con unas especificaciones similares. Es necesario es necesario tener un cabezal de impresión (habitualmente extrusor), una superficie de soporte (habitualmente cama caliente), servomotores (habitualmente 5), una placa controladora y la estructura.
+
+Para poder realizar una impresión 3d es necesario tener movimiento en 3 ejes (x, y, z). Los diferentes modelos de impresión suelen diferir en qué se mueve de la impresora (el cabezal, el soporte…), pero el modelo generalizado realiza movimiento del cabezal en los ejes x (un servomotor) y z (dos servomotores), mientras que para el eje y se mueve el soporte (un servomotor). El servomotor restante es el que controla la cantidad de material a poner en el modelo.
+
+
+
+\pagebreak
+\section{Práctica}
+\subsection{Impresión de Stents}
+\subsection{Simulación de impresión}
+\subsection{Propuestas de mejora}
+
+
+
+\pagebreak
+\section{Proyección}
+
+\pagebreak
+\section{Conclusiones}
+
+
+\pagebreak
+\section{Bibliografía}
+
+
+\pagebreak
+\section{Anexos}
+
+\end{document}
