@@ -3,6 +3,7 @@
 \author{Oriol Ruiz Dom\'{i}nguez}
 
 \usepackage{mathtools}
+\usepackage{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage[spanish]{babel}
@@ -97,14 +98,16 @@
 
 \pagebreak
 \section{Bioimpresión}
-%% Índice anteproyecto
-%\subsection{Modelado}
-%\subsubsection{Modelado cardíaco}
-%\subsubsection{Modelado de Stents}
-%\subsection{Preparación}
-%\subsection{Preimpresión}
 \subsection{Estrategias de bioimpresión}
 La bioimpresión se basa en la deposición de material biológico siguiendo un patrón establecido. Existen variedad de métodos que cumplen este objetivo, aunque los principales son: por inyección de tinta, mediante microextrusión o bien mediante un láser.
+
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.5\textwidth]{Figuras/tiposBioimpresion.eps}
+	  \caption{\emph{Estrategias de bioimpresión. }Extraído de \emph{---FALTA CITAR---}.}
+	\end{center}
+	\label{tiposBioimpresion}
+	\end{figure}
 
 \subsubsection{Inyección de tinta}
 Las impresoras de inyección de tinta son el modelo más empleado en el ámbito no biológico. De hecho, las primeras bioimpresoras de inyección de tinta se crearon a partir de la modificación de impresoras comerciales. Su funcionamiento consiste en la deposición de un volumen de tinta controlado en la posición establecida.
@@ -138,11 +141,51 @@ Para poder realizar una impresión 3d es necesario tener movimiento en 3 ejes (x
 
 	\begin{figure}[!ht]
 	\begin{center}
-	  \includegraphics[width=0.5\textwidth]{01.eps}
-	  \caption{\emph{Partes de una impresora}\\Extraído de}
+	  \includegraphics[width=0.5\textwidth]{Figuras/partesImpresora.eps}
+	  \caption{\emph{Partes de una impresora. }Extraído de \emph{Manual de montaje Tronxy P802MA}.}
 	\end{center}
 	\label{partesImpresora}
 	\end{figure}
+
+%\paragraph{Adaptación para impresión de Stents}
+
+
+%\subsubsection{Preparación}
+
+%\subsubsection{Preimpresión}
+
+
+\subsection{Modelado}
+Otro pilar esencial cuando se habla de impresión 3D son los modelos que se emplean. Estos pueden ser muy diferentes, siendo así su método de obtención totalmente distinto en función de qué estemos buscando. Habitualmente se crean modelos directamente desde un ordenador, con programas como \emph{Solidworks} o \emph{Autodesk Fusion} para modelos mecánicos o bien \emph{Blender} o \emph{3Ds Max} para figuras más gráficas.\\
+
+Por otro lado, en el ámbito de la bioimpresión trataremos más habitualmente con diseños que en vez de crearse desde cero parten de una base: el paciente. Pueden obtenerse imágenes médicas mediante TACs, Resonancias Magnéticas o Angiografías, y a partir de estas crear el modelo del individuo de estudio. Por esta razón, diferenciamos entre el proceso para obtener un modelo de corazón o bien de stent cardíaco.\\
+
+\subsubsection{Modelado cardíaco}
+\emph{Nota: el proceso aquí descrito no es necesariamente el mejor ni el más rápido, sinó el que se ha considerado mejor y más optimizado. Existen programas que crean el modelo .stl directamente desde imagenes DICOM, pero han sido rechazados en este trabajo debido a la falta de rigurosidad a la hora de analizar la validez de los datos.}\\
+
+Habiendo realizado la adquisición de datos de nuestro paciente, es muy habitual recibir imagenes en formato DICOM. Para visualizar estas imagenes es necesario contar con un software que visualice los archivos y sea capaz de crear una reconstrucción a partir de las capturas de las diversas capas. Para dicha tarea destaca el software \href{http://www.osirix-viewer.com/}{OsiriX}, mediante el cual podremos obtener la imagen 3D en un formato \empn{.wrl}.\\
+
+A partir de aquí comienza el proceso más complicado del modelaje cardíaco 3D. Las imagenes obtenidas cuentan con diversidad de impurezas, las cuales pueden ser desde errores en la obtención o el procesado hasta tejido duro indeseado. Es por ello que se realiza una fase de limpieza y suavizado del modelo. Un programa que nos permite hacer esta tarea es \href{https://www.blender.org/}{Blender}, el cual es un programa Open Source en 3D ya que permite crear modelos, animaciones, renderizar, crear vídeos o incluso juegos. Además, nos permite abrir nativamente el formato de archivo .wrl sin necesidad de realizar ningún tipo de conversión.\\
+
+Teniendo abierto el archivo de corazón con todos los elementos que lo rodean en Blender, deberemos seleccionar todas las partes indeseadas y pulsar X para eliminarlas.\\
+
+Para poder quitar imperfecciones que se hayan generado al combinar las imagenes de las diferentes capas, se aconseja realizar un suavizado del propio modelo. Este proceso también se puede realizar con Blender seleccionando las caras que se quieren suavizar y aplicando la opción \emph{Shading Smooth}.\\
+
+Pese a todo, a veces no nos interesa realizar la impresión 3D de todo el modelo, pero queremos contar con todo para el trabajo anterior sobre el ordenador. En este caso, realizar un proceso de segmentación es la opción más correcta. Mediante programas como \href{https://www.rhino3d.com/}{Rhinoceros} se pueden diferenciar capas dentro de un mismo modelo, y empleando la opción \emph{Mesh Split} se puede dividir el modelo en partes y asociarlo a las capas creadas anteriormente. De esta manera, podemos aplicar diferentes colores en función de la capa y ver, por ejemplo, partes oxigenadas y partes desoxigenadas del mismo modelo de forma clara.\\
+
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.5\textwidth]{Figuras/modeloCardio.png}
+	  \caption{\emph{Proceso propuesto de modelado cardíaco}}
+	\end{center}
+	\label{modeloCardio}
+	\end{figure}
+
+\subsubsection{Modelado de Stents}
+De una manera muy diferente se crean los modelos de Stents. Teniendo en cuenta las adaptaciones que deben tenerse en cuenta para imprimirlos, el proceso de diseño no seguirá un modelo que se visualice fácilmente.\\
+
+En primer lugar deberemos considerar 
+
 
 
 
