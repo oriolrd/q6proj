@@ -2,6 +2,7 @@
 \title{\textbf{Bioimpresi\'{o}n 3d aplicada al campo Card\'{i}aco}\\\large{ECB, EMDTB, SHB || Q6 EEBE - UPC}}
 \author{Oriol Ruiz Dom\'{i}nguez}
 
+\usepackage[section]{placeins}
 \usepackage{mathtools}
 \usepackage{hyperref}
 \usepackage[utf8]{inputenc}
@@ -147,6 +148,121 @@ Para poder realizar una impresión 3d es necesario tener movimiento en 3 ejes (x
 	\label{partesImpresora}
 	\end{figure}
 
+
+\subsubsection{Placas}
+Para poder realizar el control de la impresora se deben conectar todos sus elementos a un controlador. Existen variedad de modelos diferentes en función de las prestaciones que busquemos (visitar http://reprap.org/wiki/Comparison_of_Electronics para ver las diferencias entre ellas), aunque despunta el uso de una placa en concreto: RAMPS.\\
+
+RAMPS es el acrónimo de \emph{RepRap Arduino Mega Pololu Shield}, es decir, es una placa desarrollada por RepRap basada en Arduino Mega con el módulo Pololu. Al estar basada en una placa como Arduino Mega, su coste es muy reducido aunque a su vez tiene un elevado potencial de expansión. Asimismo, su diseño es totalmente modular, por lo que es la manera más sencilla de cambiar los elementos de la impresora, como pueden ser los drivers de los motores paso a paso. A Mayo 2017 sigue en fase de desarrollo, estando lanzada oficialmente la versión 1.4. Pueden encontrarse modificaciones de esta, como la versión 1.4.2 (Figura \ref{figure:Ramps142}) u otras versiones modificadas que se venden en tiendas online, principalmente de origen chino.\\
+
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.75\textwidth]{Figuras/RAMPS_142.jpg}
+	  \caption{\emph{Ramps 1.4.2}}
+	\end{center}
+	\label{figure:Ramps142}
+	\end{figure}
+
+\begin{itemize}
+	\item \textbf{Controlador}
+
+	El controlador de Arduino Mega es un ATmega2650. Este controlador cuenta con las especificaciones citadas en el cuadro \ref{table:ATmega2650} (datos obtenidos en la  \emph{\href{https://www.arduino.cc/en/Main/arduinoBoardMega2560}{página web de Arduino}}).
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |l|c|l| }
+\hline
+Microcontroller & ATmega2650 & Observations \\ 
+\hline
+Operating Voltage & 5V & \\
+Input Voltage (recommended) & 7-12V & \\
+Input Voltage (limit) & 6-20V & \\
+Digital I/O Pins & 54 & 15 provide PWM output\\
+Analog Input Pins & 16 & \\
+DC Current per I/O Pin & 20 mA & \\
+DC Current for 3.3V Pin & 50 mA & \\
+Flash Memory & 256 KB & 8 KB used by bootloader\\
+SRAM & 8 KB & \\
+EEPROM & 4 KB & \\
+Clock Speed & 16 MHz & \\
+LED BUILTIN & 13 & \\
+Length & 101.52 mm & \\
+Width & 53.3 mm & \\
+Weight & 37 g & \\
+\hline
+\end{tabular}
+\caption{Especificaciones del microcontrolador ATmega2650}
+\label{table:ATmega2650}
+\end{center}
+\end{table}
+
+
+\item \textbf{Circuitería}
+
+En la propia página de RAMPS podemos encontrar diagramas esquemáticos del diseño de la placa.\\
+
+En el diagrama de Conectores (Figura \ref{RAMPS_connectors}) podemos apreciar la agrupación de pins por los diferentes módulos con los que va a tratar.
+
+Por otro lado, en la Figura \ref{RAMPS_bothsides} se sobrepone el circuito impreso que ocupa la parte inferior de la placa, realizando así las conexiones necesarias entre los pins.
+
+Finalmente, en la Figura \ref{RAMPS_schematic} encontramos los diferentes módulos por bloques.
+
+\end{itemize}
+
+
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.8\textwidth]{Figuras/RAMPS_14_connectors.png}
+	  \caption{\emph{RAMPS 1.4: Conectores}}
+	\end{center}
+	\label{RAMPS_connectors}
+	\end{figure}
+	
+	
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.8\textwidth]{Figuras/RAMPS_14_bothsides.png}
+	  \caption{\emph{RAMPS 1.4: Circuito impreso}}
+	\end{center}
+	\label{RAMPS_bothsides}
+	\end{figure}
+	
+	
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.9\textwidth]{Figuras/RAMPS_14_schematic.png}
+	  \caption{\emph{RAMPS 1.4: módulos por bloques}}
+	\end{center}
+	\label{RAMPS_schematic}
+	\end{figure}
+
+Otras placas ofrecen prestaciones como conectividad WiFi \emph{(DuetWifi)} o el hecho de tenerlo todo en una misma placa \emph{(Melzi)}.\\
+
+
+\subsubsection{Firmware}
+Una vez se tienen el hardware necesario para montar la impresora, es necesario ponerle firmware para que comprenda qué movimientos debe realizar.\\
+
+De nuevo, existen una amplia variedad de opciones a instalar, pero hay proyectos que despuntan en cantidad de usuarios y que el crecimiento de su comunidad avanza exponencialmente. Ejemplos de ello son \emph{Marlin} y \emph{Repetier}.\\
+
+\paragraph{Marlin}
+Marlin es un firmware mantenido por la comunidad RepRap para impresoras 3D basadas en Arduino, dando soporte a los microcontroladores de RAMPS, RAMBo, Ultimaker o BQ entre otras. Interpreta los archivos a imprimir mediante USB o tarjetas MicroSD. Está basado en el proyecto \emph{Sprinter}, y tiene licencia GNU GPL v3.\\
+
+Marlin es un proyecto todavía en desarrollo. La última release publicada a Mayo 2017 es la 1.0.2.
+
+Para obtener la última versión, así como las que se han publicado anteriormente, se recomienda acceder a su repositorio hospedado en GitHub (\href{https://github.com/MarlinFirmware/Marlin/}{https://github.com/MarlinFirmware/Marlin/}).\\
+
+Al tener todo el código abierto, muchas compañías ofrecen sus impresoras con modificaciones en el firmware. Habitualmente pueden ser encontradas en clones de este proyecto, o bien a través de ramas de estos. No obstante, estos cambios no suelen ir más allá que cambiar el sentido del movimiento de un servo-motor, o bien de activar (o desactivar) un sensor de proximidad inductivo en un eje (como puede ser el z) como cambio a un final de carrera.\\
+
+
+\paragraph{Repetier}
+Repetier.com es un proyecto mantenido por la empresa alemana \emph{Hot-World GmbH and Co}. Esta empresa ofrece una suite completa para controlar la impresora, abarcando diferentes módulos entre los cuales se encuentran \emph{Repetier-Host}, \emph{Repetier-Firmware} o \emph{Repetier-Server}. Los módulos pueden ser instalados independientemente, aunque cuando se opta por contar con esta tecnología es habitual instalarlos todos.\\
+
+\emph{Repetier-Firmware} se corresponde con la parte que se debe instalar en el controlador (como por ejemplo, RAMPS) para procesar los datos e imprimir. 
+
+Por otro lado, \emph{Repetier-Server} es un instalador para crear un servidor mediante el cual, al estar conectado a la impresora y a la red, se pueda acceder a la impresora y controlar sus movimientos desde otros dispositivos.
+
+Finalmente, \emph{Repetier-Host} ofrece la interfaz de escritorio para diferentes sistemas operativos (Windows, Linux y OSX) para poder enviar los datos a la impresora, pasando anteriormente por \emph{Repetier-Server} si se pretende hacer de manera inhalámbrica.
+
+
 %\paragraph{Adaptación para impresión de Stents}
 
 
@@ -154,24 +270,26 @@ Para poder realizar una impresión 3d es necesario tener movimiento en 3 ejes (x
 
 %\subsubsection{Preimpresión}
 
-
+\FloatBarrier
 \subsection{Modelado}
-Otro pilar esencial cuando se habla de impresión 3D son los modelos que se emplean. Estos pueden ser muy diferentes, siendo así su método de obtención totalmente distinto en función de qué estemos buscando. Habitualmente se crean modelos directamente desde un ordenador, con programas como \emph{Solidworks} o \emph{Autodesk Fusion} para modelos mecánicos o bien \emph{Blender} o \emph{3Ds Max} para figuras más gráficas.\\
+Otro pilar fundamental cuando se habla de impresión 3D son los modelos que se emplean. Estos pueden ser muy diferentes, siendo así su método de obtención totalmente distinto en función de qué estemos buscando. Habitualmente se crean modelos directamente desde un ordenador, con programas como \emph{Solidworks} o \emph{Autodesk Fusion} para modelos mecánicos o bien \emph{Blender} o \emph{3Ds Max} para figuras más gráficas.\\
 
 Por otro lado, en el ámbito de la bioimpresión trataremos más habitualmente con diseños que en vez de crearse desde cero parten de una base: el paciente. Pueden obtenerse imágenes médicas mediante TACs, Resonancias Magnéticas o Angiografías, y a partir de estas crear el modelo del individuo de estudio. Por esta razón, diferenciamos entre el proceso para obtener un modelo de corazón o bien de stent cardíaco.\\
 
 \subsubsection{Modelado cardíaco}
-\emph{Nota: el proceso aquí descrito no es necesariamente el mejor ni el más rápido, sinó el que se ha considerado mejor y más optimizado. Existen programas que crean el modelo .stl directamente desde imagenes DICOM, pero han sido rechazados en este trabajo debido a la falta de rigurosidad a la hora de analizar la validez de los datos.}\\
+\emph{Nota: el proceso aquí descrito no es necesariamente el mejor ni el más rápido, sino el que se ha considerado mejor y más optimizado. Existen programas que crean el modelo .stl directamente desde imágenes DICOM, pero han sido rechazados en este trabajo debido a la falta de rigurosidad a la hora de analizar la validez de los datos.}\\
 
-Habiendo realizado la adquisición de datos de nuestro paciente, es muy habitual recibir imagenes en formato DICOM. Para visualizar estas imagenes es necesario contar con un software que visualice los archivos y sea capaz de crear una reconstrucción a partir de las capturas de las diversas capas. Para dicha tarea destaca el software \href{http://www.osirix-viewer.com/}{OsiriX}, mediante el cual podremos obtener la imagen 3D en un formato \empn{.wrl}.\\
+Habiendo realizado la adquisición de datos de nuestro paciente, es muy habitual recibir imágenes en formato DICOM. Para visualizar estas imágenes es necesario contar con un software que visualice los archivos y sea capaz de crear una reconstrucción a partir de las capturas de las diversas capas. Para dicha tarea destaca el software \href{http://www.osirix-viewer.com/}{OsiriX}, mediante el cual podremos obtener la imagen 3D en un formato \empn{.wrl}.\\
 
-A partir de aquí comienza el proceso más complicado del modelaje cardíaco 3D. Las imagenes obtenidas cuentan con diversidad de impurezas, las cuales pueden ser desde errores en la obtención o el procesado hasta tejido duro indeseado. Es por ello que se realiza una fase de limpieza y suavizado del modelo. Un programa que nos permite hacer esta tarea es \href{https://www.blender.org/}{Blender}, el cual es un programa Open Source en 3D ya que permite crear modelos, animaciones, renderizar, crear vídeos o incluso juegos. Además, nos permite abrir nativamente el formato de archivo .wrl sin necesidad de realizar ningún tipo de conversión.\\
+A partir de aquí comienza el proceso más complicado del modelaje cardíaco 3D. Las imágenes obtenidas cuentan con diversidad de impurezas, las cuales pueden ser desde errores en la obtención o el procesado hasta tejido duro indeseado. Es por ello que se realiza una fase de limpieza y suavizado del modelo. Un programa que nos permite hacer esta tarea es \href{https://www.blender.org/}{Blender}, el cual es un programa Open Source en 3D ya que permite crear modelos, animaciones, renderizar, crear vídeos o incluso juegos. Además, nos permite abrir nativamente el formato de archivo .wrl sin necesidad de realizar ningún tipo de conversión.\\
 
 Teniendo abierto el archivo de corazón con todos los elementos que lo rodean en Blender, deberemos seleccionar todas las partes indeseadas y pulsar X para eliminarlas.\\
 
-Para poder quitar imperfecciones que se hayan generado al combinar las imagenes de las diferentes capas, se aconseja realizar un suavizado del propio modelo. Este proceso también se puede realizar con Blender seleccionando las caras que se quieren suavizar y aplicando la opción \emph{Shading Smooth}.\\
+Para poder quitar imperfecciones que se hayan generado al combinar las imágenes de las diferentes capas, se aconseja realizar un suavizado del propio modelo. Este proceso también se puede realizar con Blender seleccionando las caras que se quieren suavizar y aplicando la opción \emph{Shading Smooth}.\\
 
 Pese a todo, a veces no nos interesa realizar la impresión 3D de todo el modelo, pero queremos contar con todo para el trabajo anterior sobre el ordenador. En este caso, realizar un proceso de segmentación es la opción más correcta. Mediante programas como \href{https://www.rhino3d.com/}{Rhinoceros} se pueden diferenciar capas dentro de un mismo modelo, y empleando la opción \emph{Mesh Split} se puede dividir el modelo en partes y asociarlo a las capas creadas anteriormente. De esta manera, podemos aplicar diferentes colores en función de la capa y ver, por ejemplo, partes oxigenadas y partes desoxigenadas del mismo modelo de forma clara.\\
+
+De forma esquemática, podemos resumir el proceso explicado en los puntos de la Figura \ref{modeloCardio}.\\
 
 	\begin{figure}[!ht]
 	\begin{center}
@@ -184,9 +302,36 @@ Pese a todo, a veces no nos interesa realizar la impresión 3D de todo el modelo
 \subsubsection{Modelado de Stents}
 De una manera muy diferente se crean los modelos de Stents. Teniendo en cuenta las adaptaciones que deben tenerse en cuenta para imprimirlos, el proceso de diseño no seguirá un modelo que se visualice fácilmente.\\
 
-En primer lugar deberemos considerar 
+En primer lugar deberemos considerar la cantidad de puntos que queremos que tenga el Stent así como como la longitud que tendrá. El diámetro del Stent vendrá dado por la barra donde se imprimirá, aunque este valor también debe tenerse en cuenta en el momento de crear el modelo.\\
+
+Teniendo la impresora configurada con la barra en vez de con mesa, el eje $y$ estará destinado a la rotación de esta. No obstante, actualmente los programas empleados no estan pensados para diseñar con este ajuste, por lo que deberemos diseñar el modelo teniendo en cuenta que avanzar en el eje $y$ implica rotar la barra.\\
+
+Finalmente, considerando las variables que tiene el diseño, nos pueden quedar modelos tales como los de la figura \ref{fig:modeloStents}.
+
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.75\textwidth]{Figuras/modeloStents.eps}
+	  \caption{\emph{Modelos de diseño de Stents en función de los puntos}}
+	\end{center}
+	\label{fig:modeloStents}
+	\end{figure}
+
+Para la creación de este modelo no es necesario tener en cuenta los nudos en los que el hilo cruzará con otra línea de hilo ya creada, pues por la cantidad de material que extruye y la precisión de este el cabezal pasará por encima de la línea anterior dejando un excedente de material prácticamente insignificante.\\
 
 
+\subsection{Slicing y preimpresión}
+Una vez tenemos la impresora instalada y funcional, y tenemos un modelo creado, todavía faltará hacer una serie de pasos para mandar la información a la impresora y que esta empiece a hacer su trabajo. Estos pasos consisten, básicamente, en convertir los datos del modelo a una serie de código "simplificado" con las instrucciones que debe seguir la impresora paso a paso.
+
+Ya teniendo el modelo, el primer paso a seguir es pasarlo por un programa troceador o \emph{slicer}. Este tipo de programas reconocen los modelos y su función esencial es dividirlos en capas para que la impresora pueda ir haciéndolas una a una. Aunque varía en función del programa que se emplee, predomina en la comunidad exportar los modelos en formato \emph{.stl} para que puedan ser reconocidos por los diferentes slicers.\\
+
+Pese a la amplia variedad de opciones disponibles, los slicers más empleados son \emph{Cura} (respaldado por el gigante Ultimaker), \emph{Slic3r} (empleado por ejemplo en el laboratorio del Dr Giuseppe Scionti), o Simplify3d (a diferencia de los anteriores, de pago).\\
+
+
+
+
+
+\pagebreak
+\section{Implementación}
 
 
 \pagebreak
