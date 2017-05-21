@@ -277,6 +277,14 @@ El primer paso consiste en modificar el servo-motor de extrusión mediante un si
 
 Por otro lado, el eje $y$ que habitualmente es movido por una cama se debe retirar. En su lugar se pne una barra cilíndrica que abarca todo el ancho de la impresora. Esta será movida por otro servo-motor, y es preferible que en los extremos cuente con cojinetes de manera que su giro sea lo más regular posible.
 
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.5\textwidth]{Figuras/stents_adapt.png}
+	  \caption{\emph{Bioimpresora adaptada para stents}}
+	\end{center}
+	\label{stents_adapt}
+	\end{figure}
+
 
 \paragraph{Cambios de firmware}
 Al haber realizado cambios en los servo-motores del sistema, deberemos volver a calibrar la impresora. Los servo-motores, y en especial los de precisión, cuentan con una cantidad de posiciones o cuentas de posibles posiciones para cada mm. Conociendo este ajuste de cuentas, en el firmware de la impresora debemos ajustar cuántas se deben avanzar para poder mover una cantidad exacta de distancia en la realidad.\\
@@ -313,11 +321,52 @@ Habiendo realizado la adquisición de datos de nuestro paciente, es muy habitual
 
 A partir de aquí comienza el proceso más complicado del modelaje cardíaco 3D. Las imágenes obtenidas cuentan con diversidad de impurezas, las cuales pueden ser desde errores en la obtención o el procesado hasta tejido duro indeseado. Es por ello que se realiza una fase de limpieza y suavizado del modelo. Un programa que nos permite hacer esta tarea es \href{https://www.blender.org/}{Blender}, el cual es un programa Open Source en 3D ya que permite crear modelos, animaciones, renderizar, crear vídeos o incluso juegos. Además, nos permite abrir nativamente el formato de archivo .wrl sin necesidad de realizar ningún tipo de conversión.\\
 
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.75\textwidth]{Figuras/mod_01.png}
+	  \caption{\emph{Modelo 3d sin tratar}}
+	\end{center}
+	\label{fig:mod_01}
+	\end{figure}
+
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.75\textwidth]{Figuras/mod_02.png}
+	  \caption{\emph{Modelo 3d tras eliminar las partes no deseadas}}
+	\end{center}
+	\label{fig:mod_02}
+	\end{figure}
+
+
 Teniendo abierto el archivo de corazón con todos los elementos que lo rodean en Blender, deberemos seleccionar todas las partes indeseadas y pulsar X para eliminarlas.\\
 
 Para poder quitar imperfecciones que se hayan generado al combinar las imágenes de las diferentes capas, se aconseja realizar un suavizado del propio modelo. Este proceso también se puede realizar con Blender seleccionando las caras que se quieren suavizar y aplicando la opción \emph{Shading Smooth}.\\
 
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.75\textwidth]{Figuras/mod_03.png}
+	  \caption{\emph{Modelo 3d suavizado}}
+	\end{center}
+	\label{fig:mod_03}
+	\end{figure}
+
 Pese a todo, a veces no nos interesa realizar la impresión 3D de todo el modelo, pero queremos contar con todo para el trabajo anterior sobre el ordenador. En este caso, realizar un proceso de segmentación es la opción más correcta. Mediante programas como \href{https://www.rhino3d.com/}{Rhinoceros} se pueden diferenciar capas dentro de un mismo modelo, y empleando la opción \emph{Mesh Split} se puede dividir el modelo en partes y asociarlo a las capas creadas anteriormente. De esta manera, podemos aplicar diferentes colores en función de la capa y ver, por ejemplo, partes oxigenadas y partes desoxigenadas del mismo modelo de forma clara.\\
+
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.75\textwidth]{Figuras/mod_04.png}
+	  \caption{\emph{Modelo 3d estableciendo capas}}
+	\end{center}
+	\label{fig:mod_04}
+	\end{figure}
+
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.75\textwidth]{Figuras/mod_05.png}
+	  \caption{\emph{Modelo 3d resultado final}}
+	\end{center}
+	\label{fig:mod_05}
+	\end{figure}
 
 De forma esquemática, podemos resumir el proceso explicado en los puntos de la Figura \ref{modeloCardio}.\\
 
@@ -373,7 +422,85 @@ El estándar Gcode es creado y mantenido por la comunidad RepRap. Haciendo uso d
 \pagebreak
 \section{Práctica}
 \subsection{Impresión de Stents}
+Por tal de comprobar la función práctica de este trabajo, en la visita que se realizó al laboratorio del Dr Scionti se procedió a la impresión de stents cardiovasculares. Estos cuentan con todas las funcionalidades y modificaciones que se han ido citando en este proyecto anteriormente.\\
+
+Se realizaron dos impresiones, en las cuales se crearon dos modelos de stent diferentes. Se puede visualizar el proceso de impresión de uno de ellos en el siguiente enlace: %%%% INSERTAR ENLACE!!!!!! %%%%%%%
+
+El primer punto importante es, tras realizar la adaptación de la barra en sustitución de la cama, hacer su calibración. Hay que comprobar que la barra (en este caso, de fibra de carbono) no está torcida, y será preferible trabajar en la parte más adecuada. Teniendo ese lugar, es aconsejable realizar un ajuste del eje $z$, colocando la punta de extrusión en la posición en la que deberá trabajar en la barra y especificar ese punto como base o cero.\\
+
+Una vez tenemos la impresora calibrada podemos proceder a la impresión de los stents.
+	
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.5\textwidth]{Figuras/stents_printing.jpg}
+	  \caption{\emph{Proceso de impresión de un stent cardiovascular}}
+	\end{center}
+	\label{stents_printing}
+	\end{figure}
+
+Finalmente, cuando se ha acabado de imprimir, podremos proceder a sacar el stent de la barra. Al estar disuelto en cloroformo, seca de manera casi inmediata. Así pues, cuando acaba tendremos que sacar la barra de los cojinetes y extraer el stent por un extremo de esta.\\
+
+En la figura \ref{stents_all} podemos observar diferentes tipos de stents, que varían en función del diámetro, longitud o cantidad de puntos.
+
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.5\textwidth]{Figuras/stents_all.jpg}
+	  \caption{\emph{Ejemplos de stents cardiovasculares}}
+	\end{center}
+	\label{stents_all}
+	\end{figure}
+
 \subsection{Simulación de impresión}
+Más allá del proceso de obtención de modelos virtuales en 3d está la parte de la propia impresión. Aunque no hemos podido contar con una bioimpresora para realizar pruebas, se han realizado varias pruebas con una impresora 3d convencional por tal de comprobar la importancia que tiene elegir bien las propiedades de impresión en función de cada material. Los materiales empleados para el estudio de este apartado son PLA, ABS y TPE (Thermoplastic Elastomer).\\
+
+\paragraph{PLA}
+La impresión de PLA ha sido realizada con una bobina \href{https://store.bq.com/es/bobina-pla-bq/}{PLA Premium BQ}.\\
+
+Se ha imprimido sin base, con soportes, a temperatura de cama de 60ºC, temperatura de extrusión de 230ºC, velocidades de movimiento 70/120 mm/s, 15\% de relleno y 0.15mm de altura de capa.\\
+
+Tras 9h de impresión, el resultado obtenido es satisfactorio. No hay signos de levantamiento de base (o \emph{warping}) y la definición, aunque pueden diferenciarse las capas, es correcta. No obstante, los soportes estan muy bien adheridos y es complicado sacarlos.\\
+
+Para evitar el problema de los soportes, sería buena opción intentar imprimir la pieza con menor temperatura de extrusión y con velocidades de movimiento menores. También podría ser recomendable imprimir con un porcentaje de relleno mayor.
+
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.5\textwidth]{Figuras/heart3.jpg}
+	  \caption{\emph{Impresi\'{o}n en PLA}}
+	\end{center}
+	\label{heartPLA}
+	\end{figure}
+
+
+\paragraph{TPE}
+La impresión de TPE ha sido realizada con una bobina \href{http://www.nunus-filamente.com/filamente/product/nunus-flexible-rubber-filament-175mm-1kg-rot/}{NuNus Flexible Rubber Filament}.
+
+A diferencia de con PLA, la temperatura de la cama es menor, y la velocidad de extrusión debe ser rebajada considerablemente. Respecto a los parámetros del PLA, ha sido imprimido con una temperatura de extrusión de 230ºC y 30ºC de cama mientras que la velocidad de impresión es de 30mm/s y 70mm/s para transporte. Otro cambio considerable es que se ha creado con estructuras de base, con \emph{raft}.\\
+
+En este caso podemos observar claramente que ha aparecido warping, pues al poner la figura en plano presenta curvatura. Se puede ver también que hay capas que no se han acabado de fundir y, por tanto, no presentan correcta adhesión entre las líneas. Asimismo, al haber aparecido warping, el extrusor se ha encontrado con material en puntos donde debería imprimir; debido a este suceso, cuando en estos puntos se imprimían estructuras de soporte, estas se han adherido con mucha fuerza al modelo, resultando muy complicado extraerlas posteriormente.\\
+
+Se puede apreciar que la dificultad que presenta imprimir con TPE respecto al PLA es mucho mayor, invirtiendo un tiempo mucho mayor para la impresión y unos resultados menos definidos.
+
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.5\textwidth]{Figuras/heart1-1.jpg}
+	  \caption{\emph{Impresi\'{o}n en TPE: warping}}
+	\end{center}
+	\label{heartTPE1}
+	\end{figure}
+
+	\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.5\textwidth]{Figuras/heart1-2.jpg}
+	  \caption{\emph{Impresi\'{o}n en TPE: soportes}}
+	\end{center}
+	\label{heartTPE2}
+	\end{figure}
+
+
+\paragraph{ABS}
+
+
+
 \subsection{Propuestas de mejora}
 
 
