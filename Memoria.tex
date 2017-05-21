@@ -263,12 +263,42 @@ Por otro lado, \emph{Repetier-Server} es un instalador para crear un servidor me
 Finalmente, \emph{Repetier-Host} ofrece la interfaz de escritorio para diferentes sistemas operativos (Windows, Linux y OSX) para poder enviar los datos a la impresora, pasando anteriormente por \emph{Repetier-Server} si se pretende hacer de manera inhalámbrica.
 
 
-%\paragraph{Adaptación para impresión de Stents}
+\subsubsection{Adaptación a la bioimpresión de stents}
+Para poder realizar una bioimpresión de stents con una impresora 3d será necesario realizar modificaciones en la impresora que se disponga, pues con las que hay comercialmente no se pueden conseguir los resultados necesarios. Dado a que se debe modificar el sistema, es habitual encontrar laboratorios que modifican equipos del proyecto RepRap, dado que al ser de código libre es mucho más fácil acceder a sus esquemas para poder estudiar qué modificaciones deberán realizarse.\\
+
+Asimsimo, al trabajar con impresoras del proyecto RepRap se puede contar con el firmware Marlin, que como se ha citado es mantenido por la misma organización, y también contará con el código abierto para poder realizar los cambios que sean necesarios. En el laboratorio del Dr Scionti, por ejemplo, hemos podido observar uno de estos cambios para adaptar una impresora 3d convencional a una de bioimpresión de stents.\\
+
+\paragraph{Cambios mecánicos}
+Las impresoras 3d por excelencia, las más comercializadas, son las de bobina de hilo. No obstante, para ser capaces de imprimir stents con PLLA deberemos cambiar el sistema de alimentación. Dada la volatilidad de este material, será preferible trabajar con él mediante una impresión por microextrusión con pistón mecánico.\\
+
+El primer paso consiste en modificar el servo-motor de extrusión mediante un sistema de engranajes, de manera que estos acaben moviendo ligeramente un pistón.
+
+%%%% INSERTAR FIGURA %%%%
+
+Por otro lado, el eje $y$ que habitualmente es movido por una cama se debe retirar. En su lugar se pne una barra cilíndrica que abarca todo el ancho de la impresora. Esta será movida por otro servo-motor, y es preferible que en los extremos cuente con cojinetes de manera que su giro sea lo más regular posible.
 
 
-%\subsubsection{Preparación}
+\paragraph{Cambios de firmware}
+Al haber realizado cambios en los servo-motores del sistema, deberemos volver a calibrar la impresora. Los servo-motores, y en especial los de precisión, cuentan con una cantidad de posiciones o cuentas de posibles posiciones para cada mm. Conociendo este ajuste de cuentas, en el firmware de la impresora debemos ajustar cuántas se deben avanzar para poder mover una cantidad exacta de distancia en la realidad.\\
 
-%\subsubsection{Preimpresión}
+Ya sea mirando las especificaciones de los servo-motores empleados o bien mediante una calibración prueba-error, debemos llegar a conocer las cuentas por milímetro de nuestros motores. Llegados a este punto, deberemos introducir el valor en el firmware para que cuando esta mande la orden de avanzar un milímetro realice realmente este movimiento.\\
+
+Para ello, deberemos acceder al código de Marlin. Estando en su repositorio, y habiendo descargado la rama que queremos montar en nuestra impresora, deberemos acceder a la carpeta "/Marlin". Dentro de esta se encuentra un archivo llamado \emph{"Configuration.h"}, el cual deberemos modificar con un editor de texto.\\
+
+En este archivo encontraremos una línea de código en la cuál se espeficican las cuentas. Esta es, por defecto:
+\begin{lstlisting}
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 4000, 500 }
+\end{lstlisting}
+
+Los valores definidos se corresponden respectivamente con las cuentas por unidad de los ejes $x$, $y$, $z$ y del extrusor. Para obtener el valor de estas deberemos realizar una serie de cálculos, tales como:
+
+$$ \text{\textbf{Pasos por unidad (ejes X e Y)}} = \frac{\text{Pasos por unidad  (ejes X e Y)}}{\text{(Dientes de la polea)}\cdot \text{(Paso de la correa)}}$$
+	
+$$ \text{\textbf{Pasos por unidad (eje Z)}} = \frac{\text{Pasos del motor por revolución}}{\text{Paso de la varilla}}$$
+	
+$$ \text{\textbf{Pasos por unidad (extrusora)}} = \frac{\text{Pasos del motor por revolución} \cdot \text{ Relación de engranaje}}{\text{Diámetro de la rueda de apriete}\cdot \pi}$$
+
+
 
 \FloatBarrier
 \subsection{Modelado}
@@ -318,7 +348,7 @@ Finalmente, considerando las variables que tiene el diseño, nos pueden quedar m
 
 Para la creación de este modelo no es necesario tener en cuenta los nudos en los que el hilo cruzará con otra línea de hilo ya creada, pues por la cantidad de material que extruye y la precisión de este el cabezal pasará por encima de la línea anterior dejando un excedente de material prácticamente insignificante.\\
 
-
+\FloatBarrier
 \subsection{Slicing y preimpresión}
 Una vez tenemos la impresora instalada y funcional, y tenemos un modelo creado, todavía faltará hacer una serie de pasos para mandar la información a la impresora y que esta empiece a hacer su trabajo. Estos pasos consisten, básicamente, en convertir los datos del modelo a una serie de código "simplificado" con las instrucciones que debe seguir la impresora paso a paso.
 
@@ -326,7 +356,13 @@ Ya teniendo el modelo, el primer paso a seguir es pasarlo por un programa trocea
 
 Pese a la amplia variedad de opciones disponibles, los slicers más empleados son \emph{Cura} (respaldado por el gigante Ultimaker), \emph{Slic3r} (empleado por ejemplo en el laboratorio del Dr Giuseppe Scionti), o Simplify3d (a diferencia de los anteriores, de pago).\\
 
+Los slicer reconocen que el diseño esté bien creado, es decir, que no tenga capas sin cerrar, y detectan las partes "interiores" de los solidos. Mediante esta detección se pueden establecer diferentes parámetros, como qué grado de relleno debe tener en las partes interiores, qué patrón debe seguir (lineal, "panel de abeja", etc.) o qué grueso deben tener las paredes exteriores.\\
 
+Asimismo, desde estos se realizarán los ajustes de impresión. Los más básicos son la temperatura a la que deben trabajar el extrusor y la cama caliente (en caso de que estén presentes en el modelo, así como podría ajustarse la temperatura de un segundo extrusor), la velocidad de movimiento que se tendrá, velocidades de los ventiladores o altura que se debe recorrer en el eje z por cada capa. Citar que cuando se trabaja con extrusión por bobina de hilo, la temperatura óptima de trabajo varía en función del material con el que estemos trabajando y por la empresa que lo haya fabricado, siendo una buena práctica acceder a la página del fabricante a buscar a qué temperatura recomiendan trabajar en caso de que no esté especificado en la bobina. Hay que tener en cuenta que, además, se pueden establecer cambios en todas las variables previamente citadas a medida que van avanzando las capas.\\
+
+En función del programa y del tipo de conexión que tengamos establecido, podremos enviar directamente desde el slicer las órdenes de impresión a la impresora, o bien exportar estos ajustes a un archivo para que lo reciba a través de otros métodos (como la tarjeta SD). En caso de trabajar con archivo, será habitual trabajar con un archivo \emph{.gcode} que será el que el controlador Arduino interpretará. Estos archivos pueden ser abiertos y modificados desde cualquier editor de texto, y suelen incorporar ciertos comandos en la parte inicial para realizar un ajuste de la impresora, consistiendo básicamente en un proceso de calibración.\\
+
+El estándar Gcode es creado y mantenido por la comunidad RepRap. Haciendo uso de \href{https://thingiverse-production-new.s3.amazonaws.com/assets/87/b0/2c/f5/4c/CheatSheet.pdf}{Cheat Sheets} podemos modificar el código que nos haya creado el slicer para realizar, por ejemplo, una calibración de varios puntos de la cama en vez de calibrar a un solo punto, o eliminar líneas para empezar en una posición concreta en caso de que la impresión haya fallado previamente y queramos recuperar el trabajo desde el punto en que se cortó. 
 
 
 
